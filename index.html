@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html>
    <head>
-      <meta charset="UTF-8" />
+      <meta charset="UTF-8">
+       <base href="/power/">
       <meta name="viewport" content="width=device-width, initial-scale=1">
-      <title>Where I parked my car</title>
-      <link rel="stylesheet" href="css/jquery.mobile-1.2.0.min.css" type="text/css" media="all" />
-      <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
+      <title>Power Prototype</title>
+      <link rel="stylesheet" href="css/jquery.mobile-1.2.0.css" type="text/css" media="all">
+      <link rel="stylesheet" href="css/style.css" type="text/css" media="all">
       <script src="js/jquery-1.8.3.min.js"></script>
       <script src="js/jquery.mobile.config.js"></script>
       <script src="js/jquery.mobile-1.2.0.min.js"></script>
@@ -21,21 +22,21 @@
    <body>
       <div id="welcome-page" data-role="page">
          <header data-role="header">
-            <h1>Where I parked my car</h1>
+            <h1>My Power's Off</h1>
          </header>
          <div id="content" data-role="content">
             <p>
-               Where I parked my car lets you bookmark where you parked your car on a map
-               and then find a route when you want to return to it. The app will also
-               save a log of your saved positions (up to 50).
+               "My Power's Off" lets you bookmark the location of power outages on a map
+               and then determines when the power is scheduled to return. The app will also
+               save up to 50 power outage locations.
             </p>
-            <a href="map.html?requestType=set" id="set-car-position" data-role="button">Set position</a>
-            <a href="map.html?requestType=get" id="find-car" data-role="button">Find car</a>
-            <a href="positions.html" id="positions-history" data-role="button">Positions history</a>
+            <a href="map.html?requestType=set" id="set-car-position" data-role="button">Set location</a>
+            <a href="map.html?requestType=get" id="find-car" data-role="button">Recall location</a>
+            <a href="positions.html" id="positions-history" data-role="button">Outage history</a>
          </div>
          <footer data-role="footer">
-            <h3>Created by Aurelio De Rosa</h3>
-            <a href="aurelio.html" data-icon="info" data-iconpos="notext" class="ui-btn-right">Credits</a>
+            <h3>Prototype By Anthony Ferlazzo</h3>
+            <a href="aferlazzo.html" data-role="button" data-icon="info" data-iconpos="notext" class="ui-btn-right"></a>
          </footer>
       </div>
    </body>
