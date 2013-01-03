@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <widget xmlns		= "http://www.w3.org/ns/widgets"
         xmlns:gap	= "http://phonegap.com/ns/1.0"
-        id		   = "com.audero.free.utility.whereiparkedmycar"
+        id		   = "com.aferlazzo.free.utility.power"
         version 	= "1.0.0">
 
-   <name>Where I parked my car</name>
+   <name>My power is out</name>
 
-   <description>"Where I parked my car" is an application for mobile devices that lets you bookmark where you parked your car, and then find a route to return to it. This application is useful if you don't have a good memory or if you're in a foreign city. In addition, "Where I parked my car" will also save a log of your saved positions (up to 50), so that you can retrieve a location for future use. The list allows you to see the position on a map, and you can also to delete one or more old locations.</description>
+   <description>"My power is out" is an application for mobile devices that lets you record when your power goes out, and possibly when it will return. This application is useful if you don't have a good memory or if you're in a foreign city. In addition, "Where I parked my car" will also save a log of your saved positions (up to 50), so that you can retrieve a location for future use. The list allows you to see the position on a map, and you can also to delete one or more old locations.</description>
 
-   <author href="http://www.audero.it" email="aurelioderosa@gmail.com">Aurelio De Rosa</author>
+   <author href="http://www.anthonyferlazzo.com" email="aferlazzo@gmail.com">Anthony Ferlazzo</author>
 
    <icon src="icon.png" gap:role="default" />
 
