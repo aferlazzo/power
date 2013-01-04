@@ -12,13 +12,34 @@
     <script src="https://maps.google.com/maps/api/js?sensor=true"></script>
     <script>
         $(document).ready(function(){
+            // remove the padding normally found in #content
+            $("#content").css("padding", 0);
+
             // Google Maps stuff
             function displayMap(latitude, longitude){
+                var myLatLng = new google.maps.LatLng(latitude, longitude);
                 var map = new google.maps.Map(document.getElementById('map'),{
                     zoom:18,
                     center: new google.maps.LatLng(latitude, longitude),
                     mapTypeId:google.maps.MapTypeId.ROADMAP
                 });
+
+                var  marker = new google.maps.Marker({
+                    map:map,
+                    draggable:true,
+                    animation: google.maps.Animation.DROP,
+                    position: myLatLng
+                });
+                google.maps.event.addListener(marker, 'click', toggleBounce);
+
+                function toggleBounce() {
+
+                    if (marker.getAnimation() != null) {
+                        marker.setAnimation(null);
+                    } else {
+                        marker.setAnimation(google.maps.Animation.BOUNCE);
+                    }
+                }
                 $("#map").html(map);
             }
 
