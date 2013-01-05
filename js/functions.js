@@ -1,36 +1,30 @@
 function checkRequirements() {
-   if (navigator.network.connection.type === Connection.NONE) {
-   {
+   if (navigator.network.connection.type == Connection.NONE){
       navigator.notification.alert(
          'To use this app you must enable your internet connection',
          function(){},
-         'Warning'
-      );
+         'Warning');
       return false;
+   }else{
+      return true;
    }
-
-   return true;
 }
 
 function updateIcons() {
-   if ($(window).width() > 480) {
-      $('a[data-icon], button[data-icon]').each(
-         function() {
+    if ($(window).width() > 480){
+        $('a[data-icon], button[data-icon]').each(function() {
             $(this).removeAttr('data-iconpos');
-         }
-      );
-   } else {
-      $('a[data-icon], button[data-icon]').each(
-         function() {
+        });
+    } else {
+      $('a[data-icon], button[data-icon]').each(function() {
             $(this).attr('data-iconpos', 'notext');
-         }
-      );
+        });
    }
 }
 
 function urlParam(name) {
    var results = new RegExp('[\\?&amp;]' + name + '=([^&amp;#]*)').exec(window.location.href);
-   if (results !== null && typeof results[1] !== 'undefined') {
+   if ((results !== null) && (typeof results[1] !== 'undefined')) {
       return results[1];
    } else {
       return null;
@@ -41,19 +35,25 @@ function urlParam(name) {
  * Initialize the application
  */
 function initApplication() {
-   $('#set-car-position, #find-car').click(function() {
-      if (checkRequirements() === false) {
+
+    initializeMaps();
+   $('#map_canvas, #recall-your-location').click(function() {
+      if (checkRequirements() == false) {
          $(this).removeClass('ui-btn-active');
          return false;
+      }else{
+          return true;
       }
    });
+
    $(document).on('pagebeforecreate orientationchange', updateIcons);
+
    $('#map-page').live('pageshow', function() {
          var requestType = urlParam('requestType');
          var positionIndex = urlParam('index');
          var geolocationOptions = {
-            timeout: 15 * 1000, // 15 seconds
-            maximumAge: 10 * 1000, // 10 seconds
+            timeout           : 15000, // 15 seconds
+            maximumAge        : 10000, // 10 seconds
             enableHighAccuracy: true
          };
          var position = new Position();
@@ -61,7 +61,7 @@ function initApplication() {
          $.mobile.loading('show');
          // If the parameter requestType is 'set', the user wants to set
          // his car position else he want to retrieve the position
-         if (requestType === 'set') {
+         if (requestType == 'set') {
             navigator.geolocation.getCurrentPosition(
                function(location)
                {
@@ -82,8 +82,7 @@ function initApplication() {
                      'Info'
                   );
                },
-               function(error)
-               {
+               function(error) {
                   navigator.notification.alert(
                      'Unable to retrieve your position. Is your GPS enabled?',
                      function(){
@@ -96,7 +95,7 @@ function initApplication() {
                geolocationOptions
             );
          } else {
-            if (position.requestType().length === 0) {
+            if (position.requestType().length == 0) {
                navigator.notification.alert(
                   'You have not set a position',
                   function(){},
@@ -110,10 +109,11 @@ function initApplication() {
                      // If positionIndex parameter isn't set, the user wants to retrieve
                      // the last saved position. Otherwise he accessed the map page
                      // from the history page, so he wants to see an old position
-                     if (positionIndex === undefined)
+                     if (positionIndex == undefined){
                         Map.displayMap(location, position.getPositions()[0]);
-                     else
+                     }else{
                         Map.displayMap(location, position.getPositions()[positionIndex]);
+                     }
                   },
                   function(error) {
                      console.log("Unable to retrieve the position: " + error.message);
@@ -134,7 +134,7 @@ function initApplication() {
  * Create the positions' history list
  */
 function createPositionsHistoryList(idElement, positions) {
-   if (positions === null || positions.length === 0) {
+    if ((positions == null) || (positions.length == 0)){
       return;
    }
    $('#' + idElement).empty();
@@ -145,10 +145,13 @@ function createPositionsHistoryList(idElement, positions) {
       $linkElement = $('<a>');
       $linkElement
       .attr('href', '#')
-      .click(
-         function() {
-            if (checkRequirements() === false)
+      .click(function() {
+            if (checkRequirements() == false){
                return false;
+            }
+
+            // Change to the map.html page. Reply to an Ajax page request
+            // with the values listed in the "data" key listed below
 
             $.mobile.changePage(
                'map.html',
@@ -159,10 +162,9 @@ function createPositionsHistoryList(idElement, positions) {
                   }
                }
             );
-         }
-      );
+         });
 
-      if (positions[i].address === '' || positions[i].address === null) {
+      if (positions[i].address == '' || positions[i].address == null) {
          $linkElement.text('Address not found');
       }else{
          $linkElement.text(positions[i].address);
@@ -180,14 +182,13 @@ function createPositionsHistoryList(idElement, positions) {
       $linkElement = $('<a>');
       $linkElement.attr('href', '#')
       .text('Delete')
-      .click(
-         function() {
+      .click(function() {
             var position = new Position();
             var oldLenght = position.getPositions().length;
             var $parentUl = $(this).closest('ul');
 
             position.deletePosition($(this).closest('li').index());
-            if (oldLenght === position.getPositions().length + 1)  {
+            if (oldLenght == position.getPositions().length + 1) {
                $(this).closest('li').remove();
                $parentUl.listview('refresh');
             } else {
@@ -197,8 +198,7 @@ function createPositionsHistoryList(idElement, positions) {
                   'Error'
                );
             }
-         }
-      );
+          });
       // Append the link to the <li> element
       $listElement.append($linkElement);
 
