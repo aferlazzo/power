@@ -41,20 +41,22 @@ function codeLatLng(lat, lng) {
 
     var markerLatLng = new google.maps.LatLng(lat, lng);
 
-    geocoder.geocode({'latLng': markerLatLng}, function(results, status) {
-        if (status == google.maps.GeocoderStatus.OK) {
-            if (results[1]) {
-                map.setZoom(18);
-                var marker = new google.maps.Marker({
-                    position: markerLatLng,
-                    map: map
-                });
+    var geocoder = new google.maps.Geocoder();
 
-                $('#streetAddress').text(results[0].formatted_address);
-            }
-        } else {
-            alert("Geocoder failed due to: " + status);
-        }
+    geocoder.geocode({'latLng': markerLatLng}, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+          if (results[1]) {
+              var marker = new google.maps.Marker({
+                  position: markerLatLng,
+                  map: map
+              });
+
+              $('#streetAddress').text(results[0].formatted_address);
+              //alert("street address: " + results[0].formatted_address);
+          }
+      } else {
+          alert("Geocoder failed due to: " + status);
+      }
     });
 }
 
@@ -66,7 +68,7 @@ function showAddress(latitude, longitude){
         mapTypeId:google.maps.MapTypeId.ROADMAP
     });
 
-    // get the address of the marker
+    // set location for the marker
     codeLatLng(latitude, longitude);
 
     var  marker = new google.maps.Marker({
@@ -75,6 +77,7 @@ function showAddress(latitude, longitude){
         animation: google.maps.Animation.DROP,
         position: myLatLng
     });
+
     google.maps.event.addListener(marker, 'click', toggleBounce);
 
     function toggleBounce() {
@@ -85,6 +88,8 @@ function showAddress(latitude, longitude){
             marker.setAnimation(google.maps.Animation.BOUNCE);
         }
     }
+
+    // find out the address
 }
 
 // html5 geolocation api stuff ------------------------------------------
@@ -118,6 +123,16 @@ function successCallback(position){
     output += "<p>Time of Position: " + theDate + " at " + theTime + "</div>";
     //$(output).insertBefore("#map_canvas");
     $(".ui-content").css("padding", 0);
+
+    var myLatlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+    var marker = new google.maps.Marker({
+      position: myLatlng,
+      map: map,
+      title:"Hello World!"
+    });
+
+
+
     showAddress(position.coords.latitude, position.coords.longitude);
 }
 
